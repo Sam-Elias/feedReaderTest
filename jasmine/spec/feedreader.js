@@ -88,18 +88,40 @@ $(function() {
             loadFeed(0, function() {
                 done();
             });
+
         });
 
         it('has at least one entry', function() {
             let entries = $('.feed .entry');
             expect(entries.length).toBeGreaterThan(0);
         });
-
+    });
     /* TODO: Write a new test suite named "New Feed Selection" */
+    describe('New Feed Selection', function() {
+        let firstFeed,
+            secondFeed;
 
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+        it('has two feeds', function() {
+            expect(allFeeds.length).toBeGreaterThan(1);
+        });
+        describe('The two feeds', function() {
+            beforeEach(function(done){
+                loadFeed(1, function(){
+                    firstFeed = $('.feed').html();
+                    loadFeed(0, function(){
+                        secondFeed = $('.feed').html();
+                        done();
+                    });
+                });
+            });
+            it('have two different states', function() {
+                expect(firstFeed).not.toEqual(secondFeed);
+            });
+
+        });
     });
 }());
